@@ -104,14 +104,110 @@ app.get('/api/ores/:id', (req, res, next) => {
 })
 
 // POST request to add a mine
+app.post('/api/mines', (req, res, next) => {
+    const {name, location, ore} = req.body;
+    console.log("Request Body Name, Location & Ore : ", name, location, ore);
+
+    if (name && location && ore) {
+      pool.query('INSERT INTO mines (name, location, ore) VALUES ($1, $2, $3) RETURNING *', [name, location, ore], (err, data) => {
+        const mine = data.rows[0];
+        console.log("Created Mine: ", mine);
+        if (mine){
+          return res.send(mine);
+        } else {
+          return next(err);
+        }
+      });
+
+    } else {
+      return res.status(400).send("Unable to create mine from request body");
+    }
+});
 
 // POST request to add an ore
+app.post('/api/ores', (req, res, next) => {
+    const {name, rarity} = req.body;
+    console.log("Request Body Name & Rarity : ", name, rarity);
+    if (name && rarity) {
+      pool.query('INSERT INTO ores (name, rarity) VALUES ($1, $2) RETURNING *', [name, rarity], (err, data) => {
+        const ore = data.rows[0];
+        console.log("Created Ore: ", ore);
+        if (ore){
+          return res.send(ore);
+        } else {
+          return next(err);
+        }
+      });
+
+    } else {
+      return res.status(400).send("Unable to create ore from request body");
+    }
+});
 
 // PATCH request to update a mine
+app.patch('/api/mines/:id', (req, res, next) => {
+    const id = Number.parseInt(req.params.id);
+    const {name, location, ore} = req.body;
+    
+    if (!Number.isInteger(id)) {
+      res.status(400).send("No mine found with that ID");
+    }
+
+    console.log("Mine ID : ", id);
+    
+    pool.query('SELECT * FROM mines WHERE id = $1', [id], (err, result) => {
+      if (err) {
+        return next(err);
+      }
+
+      console.log("Request Body Name, Location and Ore : ", name, location, ore);
+      const mine = result.rows[0];
+      console.log("Mine ID : ", id, "Value : ", mine);
+
+      if (!mine) {
+        return res.status(404).send("No mine found with that ID");
+
+      } else {
+        const updatedName = name || mine.name; 
+        const updatedLocation = location || mine.location;
+        const updatedOre = ore || mine.ore;
+        
+        pool.query('UPDATE mines SET name=$1, location=$2, ore=$3 WHERE id = $4 RETURNING *',
+         [updatedName, updatedLocation, updatedOre, id], (err, data) => {
+          
+          if (err){
+            return next(err);
+          }
+
+          const updatedMine = data.rows[0];
+          console.log("Updated Mine : ", updatedMine);
+          return res.send(updatedMine);
+        });
+      }    
+    });
+  });
 
 // DELETE request to remove a mine
+app.delete("/api/mines/:id", (req, res, next) => {
+    const id = Number.parseInt(req.params.id);
+    if (!Number.isInteger(id)){
+      return res.status(400).send("No mine found with that ID");
+    }
 
-// DELETE request to remove an ore from a mine
+    pool.query('DELETE FROM mines WHERE id = $1 RETURNING *', [id], (err, data) => {
+      if (err){
+        return next(err);
+      }
+      
+      const deletedMine = data.rows[0];
+      console.log(deletedMine);
+      if (deletedMine){
+        res.send(deletedMine);
+      } else {
+        res.status(404).send("No mine found with that ID");
+      }
+    });
+  });
 
 // Start server on port
 app.listen(port, () => {

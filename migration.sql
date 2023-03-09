@@ -1,11 +1,15 @@
-CREATE TABLE IF NOT EXISTS mines (
-    id SERIAL PRIMARY KEY,
+DROP TABLE IF EXISTS mines;
+DROP TABLE IF EXISTS ores;
+
+CREATE TABLE mines (
+    id serial NOT NULL,
     name TEXT,
-    location TEXT
+    location TEXT,
+    ore TEXT
 );
 
-CREATE TABLE IF NOT EXISTS ores (
-    id SERIAL PRIMARY KEY,
+CREATE TABLE ores (
+    id serial NOT NULL,
     name TEXT,
     rarity INTEGER
 );
