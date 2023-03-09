@@ -98,10 +98,10 @@ $("#submitadd").click(() => {
     let loc = $('#location').val()
     let material = $('#material').val()
     $.post('https://mining-web-service.onrender.com/api/mines', {
-        name: mine || 'Form text did not pass in',
-        location: loc || 'Form text did not pass in',
-        ore: material || 'Form text did not pass in'
+        name: mine,
+        location: loc,
+        ore: material
     }, function(data, status, jqxhr) {
-        $('#canvas').append('status: ' + status + ', data: ' + data);
+        $('h1').append('status: ' + status + ', data: ' + data);
     })
 })
