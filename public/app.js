@@ -14,94 +14,125 @@ $.get('https://mining-web-service.onrender.com/api/ores', (data) => {
     console.log('Ores : ', data)})
 
 $("table").hide()
-$("form").hide()
+$("#alertsuccess").hide()
+$("#alertfail").hide()
+$("#addform").hide()
+
+$('#closealert').click(() => {
+    location.reload(true)
+})
 
 // Populate table with all mines in database when user clicks on List Mines
-$("#listmine").click(() => {
+$(document).ready(() => {
 
-    $("form").hide()
-    $("table").show()
+    $("#listmine").click(() => {
 
-    // Disgusting hard coding here, to be updated
-    $('#th1').empty().html('Mine')
-    $('#th2').empty().html('Location')
-    $('#th3').empty().html('Ore')
-
-    $.get('https://mining-web-service.onrender.com/api/mines', (data) => {
-        console.log(data)
-
-        // Assign variable to table body
-        let $results = $("#output")
-        $results.empty()
-
-        // For each index in data create a row and data cells
-        for (let i = 0; i < data.length; i++) {
-            console.log(data[i])
-
-            // Create new row and append to table body
-            let $newRow = $("<tr></tr>")
-            $results.append($newRow)
-
-            // Cache current key values
-            let mine = data[i].name
-            let loc = data[i].location
-            let material = data[i].ore
-
-            // Create and append data cells to new row
-            $('<td></td>').appendTo($newRow).html(mine)
-            $('<td></td>').appendTo($newRow).html(loc)
-            $('<td></td>').appendTo($newRow).html(material)   
-        }
+        $("#addform").hide()
+        $("table").show()
+    
+        // Disgusting hard coding here, to be updated
+        $('#th1').empty().html('Mine')
+        $('#th2').empty().html('Location')
+        $('#th3').empty().html('Ore')
+    
+        $.get('https://mining-web-service.onrender.com/api/mines', (data) => {
+            console.log(data)
+    
+            // Assign variable to table body
+            let $results = $("#output")
+            $results.empty()
+    
+            // For each index in data create a row and data cells
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i])
+    
+                // Create new row and append to table body
+                let $newRow = $("<tr></tr>")
+                $results.append($newRow)
+    
+                // Cache current key values
+                let mine = data[i].name
+                let loc = data[i].location
+                let material = data[i].ore
+    
+                // Create and append data cells to new row
+                $('<td></td>').appendTo($newRow).html(mine)
+                $('<td></td>').appendTo($newRow).html(loc)
+                $('<td></td>').appendTo($newRow).html(material)   
+            }
+        })
     })
 })
+
 
 // Same as above, but for listing ores
-$("#listore").click(() => {
+$(document).ready(() => {
 
-    $("form").hide()
-    $("table").show()
+    $("#listore").click(() => {
 
-    $('#th1').empty().html('Ore')
-    $('#th2').empty().html('Value')
-    $('#th3').empty().html('')
-
-    $.get('https://mining-web-service.onrender.com/api/ores', (data) => {
-        console.log(data)
-
-        let $results = $("#output")
-        $results.empty()
-
-        for (let i = 0; i < data.length; i++) {
-            console.log(data[i])
-            let $newRow = $("<tr></tr>")
-            $results.append($newRow)
-
-            let mine = data[i].name
-            let value = data[i].rarity
-
-            $('<td></td>').appendTo($newRow).html(mine)
-            $('<td></td>').appendTo($newRow).html(value)  
-        }
+        $("#addform").hide()
+        $("table").show()
+    
+        $('#th1').empty().html('Ore')
+        $('#th2').empty().html('Value')
+        $('#th3').empty().html('')
+    
+        $.get('https://mining-web-service.onrender.com/api/ores', (data) => {
+            console.log(data)
+    
+            let $results = $("#output")
+            $results.empty()
+    
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i])
+                let $newRow = $("<tr></tr>")
+                $results.append($newRow)
+    
+                let mine = data[i].name
+                let value = data[i].rarity
+    
+                $('<td></td>').appendTo($newRow).html(mine)
+                $('<td></td>').appendTo($newRow).html(value)  
+            }
+        })
     })
 })
+
 
 // When Add is clicked
 $("#add").click(() => {
     // Hide table and generate a form for user to generate a POST request to the API
     // Form consists of entering Mine Name, Location, and Material
+    $('#mine').empty()
+    $('#location').empty()
+    $('#material').empty()
     $("table").hide()
-    $("form").show()
+    $("#addform").show()
 })
 
-$("#submitadd").click(() => {
-    let mine = $('#mine').val()
-    let loc = $('#location').val()
-    let material = $('#material').val()
-    $.post('https://mining-web-service.onrender.com/api/mines', {
-        name: mine,
-        location: loc,
-        ore: material
-    }, function(data, status, jqxhr) {
-        $('h1').append('status: ' + status + ', data: ' + data);
+$(document).ready(() => {
+
+    $("#addform").submit((e) => {
+        const form = document.querySelector("#addform")
+
+        if (!form.checkValidity()) {
+            e.preventDefault()
+        }
+
+        form.classList.add('was-validated')
+
+        let mine = $('#mine').val()
+        let loc = $('#location').val()
+        let material = $('#material').val()
+        $.post('https://mining-web-service.onrender.com/api/mines', {
+            name: `${mine}`,
+            location: `${loc}`,
+            ore: `${material}`
+        }, function(data, status) {
+            console.log('STATUS: ' + status + ', DATA: ' + JSON.stringify(data));
+        })
+
+        $('#alertsuccess').show()
+        return false;
     })
 })
