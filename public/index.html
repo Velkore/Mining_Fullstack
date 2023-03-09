@@ -17,18 +17,19 @@
 
         <h1>Mine Tracker</h1>
 
-        <div class="btn-group btn-group-lg" style="padding: 1em;">
-            <button id="listmine" class="btn bg-primary">List Mines</button>
-            <button id="listore" class="btn bg-primary">List Ores</button>
-            <button id="add" class="btn bg-primary">Add</button>
-            <button id="edit" class="btn bg-primary">Edit</button>
-            <button id="delete" class="btn bg-primary">Delete</button>
+        <div class="btn-group" style="padding: 1em;">
+            <button id="listmine" class="btn bg-gradient">List Mines</button>
+            <button id="listore" class="btn bg-gradient">List Ores</button>
+            <button id="addmine" class="btn bg-gradient">Add Mine</button>
+            <button id="addore" class="btn bg-gradient">Add Ore</button>
+            <button id="edit" class="btn bg-gradient">Edit</button>
+            <button id="delete" class="btn bg-gradient">Delete</button>
         </div>
 
         <div class="search">
             <i class="fa fa-search"></i>
             <input id="search-input" type="text" class="form-control" placeholder="Search" />
-            <button class="btn btn-primary">Search</button>
+            <button id="searchbtn" class="btn btn-primary">Search</button>
         </div>
 
         <table class="table" style="margin-top: 1em;">
@@ -42,7 +43,7 @@
             <tbody id="output"></tbody>
         </table>
 
-        <form id="addform" novalidate>
+        <form id="add-mine-form" novalidate>
             <label for="mine" class="form-label" style="float:left; margin-top: 1em;">Mine Name</label>
             <input type="text" id="mine" class="form-control" required>
 
@@ -50,7 +51,17 @@
             <input type="text" id="location" class="form-control" placeholder="Example, NY" required>
 
             <label for="material" class="form-label" style="float:left; margin-top: 1em;">Material</label>
-            <input type="text" id="material" class="form-control" placeholder="Silver, Gold, Obsidian" required>
+            <input type="text" id="material" class="form-control" required>
+
+            <button class="btn btn-success btn-lg" style="margin-top: 1em;">Submit</button>
+        </form>
+
+        <form id="add-ore-form" novalidate>
+            <label for="ore" class="form-label" style="float:left; margin-top: 1em;">Ore Name</label>
+            <input type="text" id="ore" class="form-control" required>
+
+            <label for="value" class="form-label" style="float:left; margin-top: 1em;">Value</label>
+            <input type="number" id="value" class="form-control" placeholder="1-10" required>
 
             <button class="btn btn-success btn-lg" style="margin-top: 1em;">Submit</button>
         </form>

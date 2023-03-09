@@ -16,7 +16,8 @@ $.get('https://mining-web-service.onrender.com/api/ores', (data) => {
 $("table").hide()
 $("#alertsuccess").hide()
 $("#alertfail").hide()
-$("#addform").hide()
+$("#add-mine-form").hide()
+$("#add-ore-form").hide()
 
 $('#closealert').click(() => {
     location.reload(true)
@@ -27,7 +28,8 @@ $(document).ready(() => {
 
     $("#listmine").click(() => {
 
-        $("#addform").hide()
+        $("#add-mine-form").hide()
+        $("#add-ore-form").hide()
         $("table").show()
     
         // Disgusting hard coding here, to be updated
@@ -70,7 +72,8 @@ $(document).ready(() => {
 
     $("#listore").click(() => {
 
-        $("#addform").hide()
+        $("#add-mine-form").hide()
+        $("#add-ore-form").hide()
         $("table").show()
     
         $('#th1').empty().html('Ore')
@@ -99,21 +102,22 @@ $(document).ready(() => {
 })
 
 
-// When Add is clicked
-$("#add").click(() => {
+// When Add Mine is clicked
+$("#addmine").click(() => {
     // Hide table and generate a form for user to generate a POST request to the API
     // Form consists of entering Mine Name, Location, and Material
     $('#mine').empty()
     $('#location').empty()
     $('#material').empty()
     $("table").hide()
-    $("#addform").show()
+    $("#add-ore-form").hide()
+    $("#add-mine-form").show()
 })
 
 $(document).ready(() => {
 
-    $("#addform").submit((e) => {
-        const form = document.querySelector("#addform")
+    $("#add-mine-form").submit((e) => {
+        const form = document.querySelector("#add-mine-form")
 
         if (!form.checkValidity()) {
             e.preventDefault()
@@ -128,6 +132,49 @@ $(document).ready(() => {
             name: `${mine}`,
             location: `${loc}`,
             ore: `${material}`
+        }, function(data, status) {
+            console.log('STATUS: ' + status + ', DATA: ' + JSON.stringify(data));
+        })
+
+        $('#alertsuccess').show()
+        return false;
+    })
+})
+
+$(document).ready(() => {
+
+    $('#searchbtn').click(() => {
+        $('table').show()
+        let $input = $('#search-input').val()
+    })
+})
+
+$(document).ready(() => {
+
+    $('#addore').click(() => {
+        $("table").hide()
+        $("#add-mine-form").hide()
+        $("#add-ore-form").show()
+        $('#ore').empty()
+        $('#value').empty()
+        
+    })
+
+    $("#add-ore-form").submit((e) => {
+        const form = document.querySelector("#add-ore-form")
+
+        if (!form.checkValidity()) {
+            e.preventDefault()
+        }
+
+        form.classList.add('was-validated')
+
+        let ore = $('#ore').val()
+        let val = $('#value').val()
+        
+        $.post('https://mining-web-service.onrender.com/api/ores', {
+            name: `${ore}`,
+            rarity: `${val}`
         }, function(data, status) {
             console.log('STATUS: ' + status + ', DATA: ' + JSON.stringify(data));
         })
