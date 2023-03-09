@@ -6,8 +6,6 @@ const app = express();
 const port = process.env.PORT || 8100;
 
 app.use(express.json());
-app.use(userRoutes);
-app.use(taskRoute);
 app.use(cors());
 app.use(express.static('public'));
 require('dotenv').config();
