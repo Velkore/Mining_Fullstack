@@ -7,6 +7,7 @@ const port = process.env.PORT || 8100;
 
 app.use(cors());
 app.use(express.static('public'));
+app.use(express.json())
 require('dotenv').config()
 
 const DATABASE_URL = process.env.DATABASE_URL;

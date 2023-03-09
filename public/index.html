@@ -12,41 +12,43 @@
 </head>
 
 <body>
-<div id="canvas" class="container">
+    <div id="canvas" class="container">
 
-    <h1>Mine Tracker</h1>
+        <h1>Mine Tracker</h1>
 
-    <div class="btn-group btn-group-lg" style="padding: 1em;">
-        <button id="listmine" class="btn">List Mines</button>
-        <button id="listore" class="btn">List Ores</button>
-        <button id="add" class="btn">Add</button>
-        <button id="edit" class="btn">Edit</button>
-        <button id="delete" class="btn">Delete</button>
-    </div>
+        <div class="btn-group btn-group-lg" style="padding: 1em;">
+            <button id="listmine" class="btn">List Mines</button>
+            <button id="listore" class="btn">List Ores</button>
+            <button id="add" class="btn">Add</button>
+            <button id="edit" class="btn">Edit</button>
+            <button id="delete" class="btn">Delete</button>
+        </div>
 
-    <table class="table" style="margin-top: 1em;">
-        <thead>
-            <tr>
-                <th id="th1"></th>
-                <th id="th2"></th>
-                <th id="th3"></th>
-            </tr>
-        </thead>
-        <tbody id="output"></tbody>
-    </table>
+        <table class="table" style="margin-top: 1em;">
+            <thead>
+                <tr>
+                    <th id="th1"></th>
+                    <th id="th2"></th>
+                    <th id="th3"></th>
+                </tr>
+            </thead>
+            <tbody id="output"></tbody>
+        </table>
 
-    <form id="addform">
-        <label for="mine" class="form-label" style="float:left; margin-top: 1em;">Mine Name</label>
-        <input type="text" id="mine" class="form-control">
+        <form id="addform">
+            <label for="mine" class="form-label" style="float:left; margin-top: 1em;">Mine Name</label>
+            <input type="text" id="mine" class="form-control">
 
-        <label for="location" class="form-label" style="float:left; margin-top: 1em;">Location</label>
-        <input type="text" id="location" class="form-control" placeholder="Example, NY">
+            <label for="location" class="form-label" style="float:left; margin-top: 1em;">Location</label>
+            <input type="text" id="location" class="form-control" placeholder="Example, NY">
 
-        <label for="material" class="form-label" style="float:left; margin-top: 1em;">Material</label>
-        <input type="text" id="material" class="form-control" placeholder="Silver, Gold, Obsidian">
+            <label for="material" class="form-label" style="float:left; margin-top: 1em;">Material</label>
+            <input type="text" id="material" class="form-control" placeholder="Silver, Gold, Obsidian">
 
+            
+        </form>
         <button id="submitadd" class="btn btn-success btn-lg" style="margin-top: 1em;">Submit</button>
-    </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

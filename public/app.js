@@ -94,20 +94,14 @@ $("#add").click(() => {
 })
 
 $("#submitadd").click(() => {
-    let mine = $('#mine').textContent
-    let loc = $('#location').textContent
-    let material = $('#material').textContent
+    let mine = $('#mine').val()
+    let loc = $('#location').val()
+    let material = $('#material').val()
     $.post('https://mining-web-service.onrender.com/api/mines', {
-        name: mine,
-        location: loc,
-        ore: material
-    }, (data, status, xhr) => {
-        console.log('status: ' + status + ', data: ' + data);
-    }).done(() => {
-        $("#success").show();
-    }).fail((jqxhr, settings, ex) => {
-        console.log('Failed POST request : ' + ex)
-        $("#success").hide();
-        $("#fail").show();
+        name: mine || 'Form text did not pass in',
+        location: loc || 'Form text did not pass in',
+        ore: material || 'Form text did not pass in'
+    }, function(data, status, jqxhr) {
+        $('#canvas').append('status: ' + status + ', data: ' + data);
     })
 })
