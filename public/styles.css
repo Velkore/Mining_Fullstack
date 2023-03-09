@@ -6,7 +6,6 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    background-color: #464646;
     height: 100vh;
 }
 
@@ -26,9 +25,22 @@ h1 {
     font-family: 'Montserrat', sans-serif;
 }
 
-.butn {
+.btn-primary {
     background-color: rgb(140, 120, 96);
+    transition-duration: 0.4s;
+    border-color: rgb(175, 159, 139);
 }
+
+    .btn-primary:hover {
+        background-color: rgb(97, 66, 16);
+        border-color: rgb(175, 159, 139);
+    }
+
+    .btn-primary:focus {
+        background-color: rgb(97, 66, 16);
+        border-color: rgb(175, 159, 139);
+        box-shadow: none;
+    }
 
 .search{
     position: relative;
